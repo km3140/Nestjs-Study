@@ -1,0 +1,12 @@
+- nestjs는 반드시 main.ts파일을 가져야한다, main.ts에서 시작
+
+- app.modules = 루트모듈
+
+- 컨트롤러는 express의 라우터와 비슷
+  url을 가져오고 함수를 실행
+
+- 데코레이터는 get,post와 같은 함수와 비슷
+
+- AppService : 비즈니스 로직(함수들)이 담겨있는 파일
+
+-
