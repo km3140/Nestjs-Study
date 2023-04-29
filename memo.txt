@@ -7,6 +7,12 @@
 
 - 데코레이터는 get,post와 같은 함수와 비슷
 
-- AppService : 비즈니스 로직(함수들)이 담겨있는 파일
+- Service : 비즈니스 로직(함수들)이 담겨있는 파일
 
--
+- @Res(), @Req()와 같은 decorator로 express를 직접 사용할 수 있다
+  하지만 비추, 왜냐면 fastify로 전환됐을 때 오류남
+  nestjs는 express와 fastify 두 프레임워크에서 돌아갈 수 있기 때문
+  기본적으론 express인데 이걸 fastify로 바꿀 수 있다
+  근데 저렇게 쓰면 바꿨을 때 오류난다고함
+  nestjs의 방식만 사용하면 언제든지 express와 fastify를 오류없이 스위칭 할 수 있다
+  (fastify가 express보다 2배정도 빠르다고 함, 성능향상을 위해선 fastity가 최고라고 함)
