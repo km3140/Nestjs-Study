@@ -104,7 +104,7 @@ describe('MoviesService', () => {
         expect(err).toBeInstanceOf(NotFoundException);
         expect(err.message).toEqual('Movie with ID 404 not found.');
         // expect(service.getAll().length).toEqual(1);
-        // 👆 it마다 메모리는 휘발되는 듯
+        // 👆 beforeEach로 it마다 서비스 다시 불러와서 메모리가 휘발되는 듯
       }
     });
   });

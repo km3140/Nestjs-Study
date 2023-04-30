@@ -16,3 +16,18 @@
   근데 저렇게 쓰면 바꿨을 때 오류난다고함
   nestjs의 방식만 사용하면 언제든지 express와 fastify를 오류없이 스위칭 할 수 있다
   (fastify가 express보다 2배정도 빠르다고 함, 성능향상을 위해선 fastity가 최고라고 함)
+
+- e2e test: 사용자 스토리, 사용자가 취할만한 액션을 처음부터 끝까지 테스트
+
+- jest) it : individual test
+
+- 단위 하나당 describe
+
+- Statements: 전체 코드중 명령문이 몇 개이고 얼마나 실행되었는가?
+  Branches: 전체 코드중 분기문이 몇 개이고 얼마나 실행되었는가?
+  Functions: 전체 코드중 함수가 몇 개이고 얼마나 실행되었는가?
+  Lines: 전체 코드라인이 몇 개이고 얼마나 많이 실행되었는가?
+
+- it 마다 메모리는 휘발되는 듯
+
+- 
