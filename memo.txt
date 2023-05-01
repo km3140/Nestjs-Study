@@ -18,6 +18,8 @@
   (fastify가 express보다 2배정도 빠르다고 함, 성능향상을 위해선 fastity가 최고라고 함)
 
 - e2e test: 사용자 스토리, 사용자가 취할만한 액션을 처음부터 끝까지 테스트
+            해당 url에서 나올 수 있는 경우들 테스트?
+            Controller, Service, Pipe 모든 것을 테스트하고 있음
 
 - jest) it : individual test
 
@@ -28,6 +30,7 @@
   Functions: 전체 코드중 함수가 몇 개이고 얼마나 실행되었는가?
   Lines: 전체 코드라인이 몇 개이고 얼마나 많이 실행되었는가?
 
-- it 마다 메모리는 휘발되는 듯
+- beforeEach에서 앱을 계속 새로 만들어서 로컬스토리지가 계속 초기화됨
 
-- 
+- 파이프를 사용하는 방법(Binding pipes)은 세가지로 나뉘어 질 수 있다
+  Handler-level Pipes, Parameter-level Pipes, Global-level Pipes
