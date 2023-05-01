@@ -1,10 +1,5 @@
-import {
-  IsString,
-  IsNumber,
-  IsNotEmpty,
-  IsIn,
-  ArrayContains,
-} from 'class-validator';
+import { IsString, IsNumber, IsNotEmpty, IsIn } from 'class-validator';
+import { MovieGenres } from '../movies-genres.enum';
 
 // DTO : Data Transfer Object : 데이터 전송을 위한 모델
 export class CreateMovieDto {
@@ -26,5 +21,5 @@ export class CreateMovieDto {
   @IsIn(['action', 'drama', 'comedy', 'romance', 'thriller'], {
     each: true,
   })
-  readonly genres: string[];
+  readonly genres: MovieGenres[];
 }

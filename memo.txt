@@ -34,3 +34,10 @@
 
 - 파이프를 사용하는 방법(Binding pipes)은 세가지로 나뉘어 질 수 있다
   Handler-level Pipes, Parameter-level Pipes, Global-level Pipes
+
+- DB관련 작업은 Repository에서 이루어진다
+  요청 -> Controller -> Service -> Repository -> Service -> Controller -> 응답
+
+- typeORM 3.x.x에서 바뀐 게 너무 많음 ㅠ
+
+- typeORM 3.x.x에서부터 repository를 providers에 추가, 그래서 service에 @InjectRepository(레포)할 필요가 없는듯?

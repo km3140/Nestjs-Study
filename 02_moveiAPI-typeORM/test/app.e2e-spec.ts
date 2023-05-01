@@ -3,6 +3,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 //                        👆 e2e에 쓰이는 라이브러리
 import { AppModule } from './../src/app.module';
+import { MovieGenres } from 'src/movies/movies-genres.enum';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -47,7 +48,7 @@ describe('AppController (e2e)', () => {
         .send({
           title: 'test',
           year: 2000,
-          genres: ['test'],
+          genres: [MovieGenres.action],
         })
         .expect(201);
     });
@@ -57,7 +58,7 @@ describe('AppController (e2e)', () => {
         .send({
           title: 'test',
           year: 2000,
-          genres: ['test'],
+          genres: [MovieGenres.action],
           badReq: 'blocked by forbidNonWhitelisted',
         })
         .expect(400);

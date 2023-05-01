@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MoviesService } from './movies.service';
 import { NotFoundException } from '@nestjs/common';
+import { MovieGenres } from './movies-genres.enum';
 
 // describe { it, it, it ... }
 describe('MoviesService', () => {
@@ -18,7 +19,7 @@ describe('MoviesService', () => {
 
     service.create({
       title: 'test movie',
-      genres: ['test'],
+      genres: [MovieGenres.action],
       year: 2000,
     });
   });
@@ -73,7 +74,7 @@ describe('MoviesService', () => {
       const beforeCreate = service.getAll().length;
       service.create({
         title: 'test movie',
-        genres: ['test'],
+        genres: [MovieGenres.action],
         year: 2000,
       });
       const afterCreate = service.getAll().length;
@@ -86,7 +87,7 @@ describe('MoviesService', () => {
       const beforeUpdate = service.getAll();
       const updateData = {
         title: 'updated',
-        genres: ['updated'],
+        genres: [MovieGenres.action],
         year: 7777,
       };
       service.update(1, updateData);
