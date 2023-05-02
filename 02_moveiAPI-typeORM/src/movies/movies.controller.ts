@@ -1,10 +1,19 @@
-import { Controller, Body, Get, Param, Post } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Get,
+  Param,
+  Post,
+  Delete,
+  Patch,
+} from '@nestjs/common';
 import { MoviesService } from './movies.service';
 //       👆 타입만 import
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update.movie.dto';
 import { Movie } from './movies.entity';
 import { create } from 'domain';
+import { promises } from 'dns';
 
 //            👇 해당 컨트롤러의 엔트리 포인트
 @Controller('movies')
@@ -14,6 +23,11 @@ export class MoviesController {
   //                           👆 service는 import 하지 않았는데 service를 사용할 수 있는 이유 => dependency injection
   //                              내부적으로 콘트롤러와 서비스는 모듈파일 안에 같이 존재한다
 
+  @Get()
+  getAllMovies(): Promise<Movie[]> {
+    return this.moviesService.getAllMovies();
+  }
+
   @Get('/:id')
   getMovieById(@Param('id') id: number): Promise<Movie> {
     return this.moviesService.getMovieById(id);
@@ -22,6 +36,19 @@ export class MoviesController {
   @Post()
   createMovie(@Body() createMovieDto: CreateMovieDto): Promise<Movie> {
     return this.moviesService.createMovie(createMovieDto);
+  }
+
+  @Delete('/:id')
+  deleteMovie(@Param('id') id: number): Promise<void> {
+    return this.moviesService.deleteMovie(id);
+  }
+
+  @Patch('/:id')
+  updateMovie(
+    @Param('id') id: number,
+    @Body() updateData: UpdateMovieDto,
+  ): Promise<Movie> {
+    return this.moviesService.updateMovie(id, updateData);
   }
 
   // @Get()

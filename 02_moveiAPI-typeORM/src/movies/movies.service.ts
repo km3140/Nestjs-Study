@@ -13,6 +13,11 @@ export class MoviesService {
     private moviesRepository: MoviesRepository,
   ) {}
 
+  async getAllMovies(): Promise<Movie[]> {
+    return this.moviesRepository.find();
+    //                            👆 인자로 객체 안에 옵션 넣어서 특정한 데이터를 찾아줄 수 있는데 안 넣으면 다 가져옴
+  }
+
   async getMovieById(id: number): Promise<Movie> {
     const found = await this.moviesRepository.findOneBy({ id });
     //                                        👆 findOne(id)에서 변경
@@ -25,6 +30,24 @@ export class MoviesService {
 
   createMovie(createMovieDto: CreateMovieDto): Promise<Movie> {
     return this.moviesRepository.createMovie(createMovieDto);
+  }
+
+  //                                     👇 리턴값 없을때
+  async deleteMovie(id: number): Promise<void> {
+    const result = await this.moviesRepository.delete(id);
+    //                                   👆 지웠으면 result.affected === 1, 해당 아이디에 맞는 영화가 없으면 0, remove()는 못찾으면 에러 리턴
+    if (result.affected === 0) {
+      throw new NotFoundException(`Cant find Movie with id ${id}`);
+    }
+  }
+
+  async updateMovie(id: number, updateData: UpdateMovieDto): Promise<Movie> {
+    const movie = await this.getMovieById(id);
+    if (updateData.title) movie.title = updateData.title;
+    if (updateData.year) movie.year = updateData.year;
+    if (updateData.genres) movie.genres = updateData.genres;
+    await this.moviesRepository.save(movie);
+    return movie;
   }
 
   // 👇👇👇👇👇로컬 스토리지 사용👇👇👇👇👇

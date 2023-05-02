@@ -10,7 +10,7 @@ export class Movie extends BaseEntity {
   @Column()
   title: string;
 
-  @Column()
+  @Column() // 'bigint' -> string?
   year: number;
 
   @Column({
