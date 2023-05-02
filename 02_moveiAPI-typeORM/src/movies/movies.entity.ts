@@ -5,7 +5,7 @@ import { MovieGenres } from './movies-genres.enum';
 @Entity()
 export class Movie extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
-  id: number; //           👆 AUTO_INCREMENT
+  id: number; //           👆 AUTO_INCREMENT, 안붙여줘도 되나?
 
   @Column()
   title: string;

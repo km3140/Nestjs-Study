@@ -9,7 +9,7 @@ import { Movie } from './movies.entity';
 @Injectable()
 export class MoviesService {
   constructor(
-    // @InjectRepository(MoviesRepository) 👈 typeORM 3.x.x 업데이트로 오류남
+    // @InjectRepository(MoviesRepository) 👈 typeORM 3.x.x 업데이트로 오류남, 이게 없어진 대신 모듈파일의 provider로 repo가 추가되는 듯?
     private moviesRepository: MoviesRepository,
   ) {}
 
