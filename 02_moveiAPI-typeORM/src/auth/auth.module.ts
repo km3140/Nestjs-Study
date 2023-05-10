@@ -4,10 +4,27 @@ import { AuthService } from './auth.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { UserRepository } from './user.repository';
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { JWtStrategy } from './jwt.strategy';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    // 👆 sesstion또는 jwt같은 인증을 편리하게 도와주는 라이브러리
+    JwtModule.register({
+      secret: 'Secret1234',
+      //        👆 jwt 검증 비밀번호
+      signOptions: {
+        expiresIn: 60 * 60,
+        // 👆 토큰 유효기간 : 60분
+      },
+    }),
+    TypeOrmModule.forFeature([User]),
+  ],
   controllers: [AuthController],
-  providers: [AuthService, UserRepository],
+  providers: [AuthService, UserRepository, JWtStrategy],
+  exports: [JWtStrategy, PassportModule],
+  //        👆           👆 다른 모듈에서도 사용할 수 있도록?
 })
 export class AuthModule {}

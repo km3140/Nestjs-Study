@@ -41,3 +41,11 @@
 - typeORM 3.x.x에서 바뀐 게 너무 많음 ㅠ
 
 - typeORM 3.x.x에서부터 repository를 providers에 추가, 그래서 service에 @InjectRepository(레포)할 필요가 없는듯?
+
+- 미들웨어 종류 : Pipes, Filter, Guards, Interceptors
+  Pipes : 요청 유효성 검사 및 페이로드 변환
+  Filter : 오류 처리
+  Guards : 인증
+  Interceptors : 응답 매핑 및 캐시 관리, 요청 로깅과 같은 전후 미들웨어 
+
+- 미들웨어가 불려지는 순서 : guard -> Interceptor(before) -> pipe -> controller -> service -> controller -> Interceptor(after) -> filter(if applicable?) -> client
