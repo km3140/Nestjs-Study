@@ -6,17 +6,20 @@ import {
   Post,
   Delete,
   Patch,
+  UseGuards,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 //       👆 타입만 import
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update.movie.dto';
 import { Movie } from './movies.entity';
-import { create } from 'domain';
-import { promises } from 'dns';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/get-user.decorator';
+import { User } from 'src/auth/user.entity';
 
 //            👇 해당 컨트롤러의 엔트리 포인트
 @Controller('movies')
+@UseGuards(AuthGuard())
 export class MoviesController {
   //                                           👇 type만 import했음, service는 안함
   constructor(private readonly moviesService: MoviesService) {}
@@ -34,8 +37,11 @@ export class MoviesController {
   }
 
   @Post()
-  createMovie(@Body() createMovieDto: CreateMovieDto): Promise<Movie> {
-    return this.moviesService.createMovie(createMovieDto);
+  createMovie(
+    @Body() createMovieDto: CreateMovieDto,
+    @GetUser() user: User,
+  ): Promise<Movie> {
+    return this.moviesService.createMovie(createMovieDto, user);
   }
 
   @Delete('/:id')

@@ -1,7 +1,10 @@
+import { type } from 'os';
+import { Movie } from 'src/movies/movies.entity';
 import {
   BaseEntity,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
@@ -18,4 +21,8 @@ export class User extends BaseEntity {
 
   @Column()
   password: string;
+
+  //      movie에서 user를 접근 할 때 위치 명시 👇      👇 true = user 정보를 가져올 때 movie정보도 같이 가져옴
+  @OneToMany((type) => Movie, (movie) => movie.user, { eager: true })
+  movies: Movie[];
 }

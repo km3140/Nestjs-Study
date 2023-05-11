@@ -4,6 +4,7 @@ import { UpdateMovieDto } from './dto/update.movie.dto';
 import { MoviesRepository } from './movies.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Movie } from './movies.entity';
+import { User } from 'src/auth/user.entity';
 
 // 👇 dependency injection
 @Injectable()
@@ -28,8 +29,8 @@ export class MoviesService {
     return found;
   }
 
-  createMovie(createMovieDto: CreateMovieDto): Promise<Movie> {
-    return this.moviesRepository.createMovie(createMovieDto);
+  createMovie(createMovieDto: CreateMovieDto, user: User): Promise<Movie> {
+    return this.moviesRepository.createMovie(createMovieDto, user);
   }
 
   //                                     👇 리턴값 없을때
