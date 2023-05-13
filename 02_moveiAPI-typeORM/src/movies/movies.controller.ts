@@ -7,6 +7,7 @@ import {
   Delete,
   Patch,
   UseGuards,
+  Logger,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 //       👆 타입만 import
@@ -21,14 +22,22 @@ import { User } from 'src/auth/user.entity';
 @Controller('movies')
 @UseGuards(AuthGuard())
 export class MoviesController {
-  //                                           👇 type만 import했음, service는 안함
+  private logger = new Logger('MoviesController');
+  //                 로그를 내보내고 있는 곳👆
+  //                                              👇 type만 import했음, service는 안함
   constructor(private readonly moviesService: MoviesService) {}
   //                           👆 service는 import 하지 않았는데 service를 사용할 수 있는 이유 => dependency injection
   //                              내부적으로 콘트롤러와 서비스는 모듈파일 안에 같이 존재한다
 
   @Get()
-  getAllMovies(): Promise<Movie[]> {
+  getAllMovies(@GetUser() user: User): Promise<Movie[]> {
+    this.logger.verbose(`User ${user.username} trying to get all movies`);
     return this.moviesService.getAllMovies();
+  }
+
+  @Get('/owns')
+  getMyMovies(@GetUser() user: User): Promise<Movie[]> {
+    return this.moviesService.getMyMovies(user);
   }
 
   @Get('/:id')
@@ -41,12 +50,18 @@ export class MoviesController {
     @Body() createMovieDto: CreateMovieDto,
     @GetUser() user: User,
   ): Promise<Movie> {
+    this.logger.verbose(
+      //                                                            👇 해주지 않으면 "[object]" 이런식으로 나옴
+      `User ${user.username} creating a new movie. Payload: ${JSON.stringify(
+        createMovieDto,
+      )}`,
+    );
     return this.moviesService.createMovie(createMovieDto, user);
   }
 
   @Delete('/:id')
-  deleteMovie(@Param('id') id: number): Promise<void> {
-    return this.moviesService.deleteMovie(id);
+  deleteMovie(@Param('id') id: number, @GetUser() user: User): Promise<void> {
+    return this.moviesService.deleteMovie(id, user);
   }
 
   @Patch('/:id')

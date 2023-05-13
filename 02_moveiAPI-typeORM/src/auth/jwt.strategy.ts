@@ -3,13 +3,16 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UserRepository } from './user.repository';
 import { User } from './user.entity';
+import * as config from 'config';
+
+const jwtConfig = config.get('jwt');
 
 // jwt해석을 위한 미들웨어(guard)파일
 @Injectable()
 export class JWtStrategy extends PassportStrategy(Strategy) {
   constructor(private userRepository: UserRepository) {
     super({
-      secretOrKey: 'Secret1234',
+      secretOrKey: process.env.JWT_SECRET || jwtConfig.secret,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       //                                          👆 BearerToken타입으로 토큰 추출
     });

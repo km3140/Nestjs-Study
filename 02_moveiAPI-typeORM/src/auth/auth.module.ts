@@ -7,16 +7,19 @@ import { UserRepository } from './user.repository';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JWtStrategy } from './jwt.strategy';
+import * as config from 'config';
+
+const jwtConfig = config.get('jwt');
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     // 👆 sesstion또는 jwt같은 인증을 편리하게 도와주는 라이브러리
     JwtModule.register({
-      secret: 'Secret1234',
+      secret: process.env.JWT_SECRET || jwtConfig.secret,
       //        👆 jwt 검증 비밀번호
       signOptions: {
-        expiresIn: 60 * 60,
+        expiresIn: jwtConfig.expiresIn,
         // 👆 토큰 유효기간 : 60분
       },
     }),

@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMovieDto } from './dto/create-movie.dto';
 import { UpdateMovieDto } from './dto/update.movie.dto';
 import { MoviesRepository } from './movies.repository';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Movie } from './movies.entity';
 import { User } from 'src/auth/user.entity';
 
@@ -28,14 +27,28 @@ export class MoviesService {
 
     return found;
   }
+  async getMyMovies(user: User): Promise<Movie[]> {
+    //                                                      👇 테이블명
+    const query = this.moviesRepository.createQueryBuilder('movie');
+    //                                  👆 복잡한 로직은 쿼리빌더로!(SQL) 여기서는 그냥 한 번 해봄
+    query.where('movie.userId = :userId', { userId: user.id });
+
+    const movies = await query.getMany();
+    //                           👆 조건절에 일치하는 모든 것을 들고옴
+
+    return movies;
+  }
 
   createMovie(createMovieDto: CreateMovieDto, user: User): Promise<Movie> {
     return this.moviesRepository.createMovie(createMovieDto, user);
   }
 
-  //                                     👇 리턴값 없을때
-  async deleteMovie(id: number): Promise<void> {
-    const result = await this.moviesRepository.delete(id);
+  //                                                 👇 리턴값 없을때
+  async deleteMovie(id: number, user: User): Promise<void> {
+    const result = await this.moviesRepository.delete({
+      id,
+      user: { id: user.id },
+    });
     //                                   👆 지웠으면 result.affected === 1, 해당 아이디에 맞는 영화가 없으면 0, remove()는 못찾으면 에러 리턴
     if (result.affected === 0) {
       throw new NotFoundException(`Cant find Movie with id ${id}`);

@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, Logger } from '@nestjs/common';
+import * as config from 'config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,7 +18,13 @@ async function bootstrap() {
       //    덕분에 로직에서 형변환을 시킬 필요가 없어짐, class-transform
     }),
   );
-  await app.listen(3000);
+
+  //                                👇 config폴더 안의 파일들 중 그 안의server객체?를 가져옴
+  const serverConfig = config.get('server');
+  const port = serverConfig.port;
+  await app.listen(port);
+  Logger.log(`Application running on port ${port}`);
+  // 👆 nestjs내장 log모듈
 }
 bootstrap();
 

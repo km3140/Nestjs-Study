@@ -49,3 +49,14 @@
   Interceptors : 응답 매핑 및 캐시 관리, 요청 로깅과 같은 전후 미들웨어 
 
 - 미들웨어가 불려지는 순서 : guard -> Interceptor(before) -> pipe -> controller -> service -> controller -> Interceptor(after) -> filter(if applicable?) -> client
+
+- 로그의 종류
+  Log : 중요한 정보의 범용 로깅
+  Warning : 치명적이거나 파괴적이진 않고 처리되지 않은 문제
+  Error : 치명적이거나 파괴적인 처리되지 않은 문제
+  Debug : 오류 발생 시 로직을 디버그하는 데 도움이 되는 정보, 개발자용
+  Verbost : 응용프로그램으 동작에 대한 통찰력을 제공하는 정보, 운영자용
+
+- npm i -g win-node-env
+  윈도우는 기본적으로 환경변수 지원을 안함
+  그리고 npm i config
