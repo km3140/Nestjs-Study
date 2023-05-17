@@ -11,8 +11,8 @@ async function bootstrap() {
     // 👆 거의 모든 유효성검사를 도움, 👆 페이로드 형변환 도와줌
     //  👇 들어오는 모든 클라이언트 페이로드에 대해 유효성 검사 규칙을 적용하는 편리한 접근 방식을 제공
     new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
+      whitelist: true, // 👈 엔티티에 없는 프로퍼티 값은 무조건 거름
+      forbidNonWhitelisted: true, // 👈 엔티티에 없는 값 입력 시 그 값에 대한 에러메세지 알려줌
       transform: true,
       // 👆 전송받은 데이터의 타입을 콘트롤러에 명시한 타입으로 변환(url로 들어오는 값은 모두 string임)
       //    덕분에 로직에서 형변환을 시킬 필요가 없어짐, class-transform
